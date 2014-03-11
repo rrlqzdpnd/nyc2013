@@ -1,0 +1,16 @@
+<?php
+    $name = $_POST['name'];
+    $body = $_POST['body'];
+    $image = $_POST['image'];
+    $location = $_POST['location'];
+    $include_image = $_POST['includeimage'];
+
+    $connect_str = "host=localhost dbname=wordpress user=postgres";
+    
+    if(pg_connect($connect_str))    {
+        
+    }
+    else
+        echo(json_encode("Failed"));
+    pg_close();
+?>

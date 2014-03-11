@@ -1,0 +1,63 @@
+$(document).ready(function()    {
+    $('#answer').focus();
+    $('#imagetextbox').hide();
+    $('#done').hide();
+    $('#inclimage').click(function()    {
+        if($(this).is(':checked'))    {
+            alert("To make things easy, Right click the desired picture > View Image > Paste the URL here");
+            $('#imagetextbox').fadeIn();
+        }
+        else
+            $('#imagetextbox').fadeOut();
+    });
+    $('#mainForm').submit(function()    {
+        var body = $('#answer').val();
+        var image = $('#imagetextbox').val();
+        var name = $('#name').val();
+        var location = $('#location').val();
+        var includeimage = $('#inclimage').is(':checked');
+        if(name == null || name == '')    {
+            alert("Please input your name");
+            return false;
+        }
+        else if(location == null || location == '')    {
+            alert("Please input your location");
+            return false;
+        }
+        else if(body == null || body == '')    {
+            alert("Please tell us what you think before submitting");
+            return false;
+        }
+        else if(includeimage == true  && (image == null || image == ''))    {
+            alert("Please include a link for the photo.");
+            return false;
+        }
+        $.ajax({
+            type: 'post',
+            url: 'http://106.186.21.135/wordpress/wp-content/themes/twentytwelve/process.php',
+            data: {
+                body: body,
+                image: image,
+                name: name,
+                location: location,
+                includeimage: includeimage
+            },
+            dataType: 'json',
+            success: function(data)    {
+                if(data == 'Failed')
+                    alert("Oops! Something went wrong. Please check back again later!");
+                else if(data == 'Duplicate')
+                    alert("You have already sent the same message. Please try again in a few hours.");
+                else if(data == 'Done')    {
+                    $('#mainForm').fadeOut('slow', function()    {
+                        $('#done').fadeIn('slow');
+                    });
+                }
+            },
+            error: function() {
+                alert('Oops! Something went wrong. Please check back again later!');
+            }
+        });
+        return false;
+    });
+});
