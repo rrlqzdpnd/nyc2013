@@ -19,10 +19,10 @@
 define('DB_NAME', 'wordpress');
 
 /** MySQL database username */
-define('DB_USER', 'postgres');
+define('DB_USER', '');
 
 /** MySQL database password */
-define('DB_PASSWORD', '0112358132134');
+define('DB_PASSWORD', '');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
